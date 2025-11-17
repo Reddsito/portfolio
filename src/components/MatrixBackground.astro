@@ -1,0 +1,78 @@
+<canvas
+	id="matrix-canvas"
+	class="matrix-bg"
+></canvas>
+
+<script>
+	const canvas = document.getElementById("matrix-canvas") as HTMLCanvasElement;
+	const ctx = canvas.getContext("2d");
+
+	if (ctx) {
+		// Set canvas size
+		function resizeCanvas() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+
+		resizeCanvas();
+
+		// Matrix characters
+		const chars =
+			"01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+		const fontSize = 14;
+		const columns = canvas.width / fontSize;
+
+		// Initialize drops
+		const drops: number[] = [];
+		for (let i = 0; i < columns; i++) {
+			drops[i] = Math.random() * -100;
+		}
+
+		// Draw function
+		function draw() {
+			if (!ctx || !canvas) return;
+
+			// Fade effect
+			ctx.fillStyle = "rgba(13, 13, 13, 0.05)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			// Text style
+			ctx.fillStyle = "rgba(240, 240, 240, 0.85)";
+			ctx.font = `${fontSize}px monospace`;
+
+			// Draw characters
+			for (let i = 0; i < drops.length; i++) {
+				const text = chars[Math.floor(Math.random() * chars.length)];
+				ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+				// Reset drop
+				if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}
+		}
+
+		// Animation loop
+		const interval = setInterval(draw, 33);
+
+		// Handle resize
+		window.addEventListener("resize", resizeCanvas);
+
+		// Cleanup on page navigation (for SPAs)
+		document.addEventListener("astro:before-swap", () => {
+			clearInterval(interval);
+			window.removeEventListener("resize", resizeCanvas);
+		});
+	}
+</script>
+
+<style>
+	.matrix-bg {
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		opacity: 0.4;
+		z-index: 0;
+	}
+</style>

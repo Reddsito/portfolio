@@ -1,16 +1,32 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/sections/HeroSection.astro";
+import ProjectsSection from "../components/sections/ProjectsSection.astro";
+import ExperienceSection from "../components/sections/ExperienceSection.astro";
+import MatrixBackground from "../components/MatrixBackground.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+	title="Enrique's Portfolio"
+	description="Proyectos educativos que documentan mi proceso de aprendizaje en desarrollo backend.">
+	<main class="main-wrapper">
+		<MatrixBackground />
+		<div class="content-wrapper">
+			<HeroSection />
+			<ProjectsSection />
+			<ExperienceSection />
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.main-wrapper {
+		position: relative;
+		min-height: 100vh;
+	}
+
+	.content-wrapper {
+		position: relative;
+		z-index: 10;
+	}
+</style>

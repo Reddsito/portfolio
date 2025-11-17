@@ -1,0 +1,231 @@
+---
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+---
+
+<section class="hero">
+  <div class="hero-container">
+    <Card class="terminal-card">
+      <div class="terminal-header">
+        <span class="prompt">$</span>
+        <span class="typing-text" id="typing-text"></span>
+        <span class="cursor"></span>
+      </div>
+
+      <div class="content">
+        <p class="comment">
+          <span class="comment-mark">//</span> El trabajo de backend es invisible pero fundamental
+        </p>
+
+        <p class="text-primary">
+          Como backend developer, trabajo en la <strong>oscuridad</strong> —
+          construyendo la infraestructura que nadie ve pero todos necesitan.
+        </p>
+
+        <p class="text-muted">
+          Es difícil mostrar visualmente lo que hago: servidores, APIs, bases de datos, colas de mensajes,
+          autenticación... Todo sucede detrás de escena.
+        </p>
+
+        <div class="divider"></div>
+
+        <p class="text-primary">
+          <span class="arrow">→</span> Por eso creé mini proyectos educativos
+        </p>
+        <p class="text-muted indent">
+          Cada uno documenta mi proceso de aprendizaje: desde crear mi propio servidor web, implementar
+          autenticación, trabajar con colas, hasta el despliegue completo.
+        </p>
+
+        <div class="code-block">
+          <p>
+            <span class="keyword">if</span> (quieres.ver === <span class="string">'experiencia'</span>) {
+            <button class="link scroll-btn" data-target="experience">salta a experiencia</button> }
+          </p>
+          <p>
+            <span class="keyword">else if</span> (quieres.ver === <span class="string">'pasión'</span>) {
+            <button class="link scroll-btn" data-target="projects">explora proyectos</button> }
+          </p>
+        </div>
+      </div>
+    </Card>
+
+    <Button variant="ghost" class="scroll-indicator" data-target="projects" ariaLabel="Scroll to projects">
+      <Icon name="arrow-down" size="md" />
+    </Button>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .hero-container {
+    max-width: 56rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero :global(.terminal-card) {
+    padding: 3rem 2rem;
+    font-family: var(--font-mono);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .prompt {
+    font-size: 0.875rem;
+  }
+
+  .typing-text {
+    font-weight: 500;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 0.5rem;
+    height: 1.25rem;
+    background: var(--primary);
+    margin-left: 0.25rem;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.75;
+  }
+
+  .comment {
+    color: var(--muted-foreground);
+  }
+
+  .comment-mark {
+    color: var(--primary);
+  }
+
+  .text-primary {
+    color: var(--foreground);
+  }
+
+  .text-muted {
+    color: var(--muted-foreground);
+  }
+
+  .text-primary strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1rem 0;
+  }
+
+  .arrow {
+    color: var(--primary);
+  }
+
+  .indent {
+    padding-left: 1rem;
+  }
+
+  .code-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .keyword {
+    color: var(--primary);
+  }
+
+  .string {
+    color: var(--accent);
+  }
+
+  .link {
+    color: var(--primary);
+    margin-left: 0.5rem;
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: all 0.2s ease;
+  }
+
+  .link:hover {
+    color: var(--accent);
+    text-decoration-thickness: 2px;
+    transform: translateY(-1px);
+  }
+
+  .scroll-indicator {
+    margin: 0 auto;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (min-width: 640px) {
+    .hero :global(.terminal-card) {
+      padding: 3rem;
+    }
+  }
+</style>
+
+<script>
+  // Typing effect
+  const typingText = document.getElementById('typing-text');
+  const fullText = '> Backend Developer';
+  let index = 0;
+
+  function type() {
+    if (typingText && index <= fullText.length) {
+      typingText.textContent = fullText.slice(0, index);
+      index++;
+      setTimeout(type, 100);
+    }
+  }
+
+  type();
+
+  // Smooth scroll for all scroll buttons
+  document.querySelectorAll('.scroll-btn, .scroll-indicator').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const target = (e.currentTarget as HTMLElement).getAttribute('data-target');
+      const element = document.getElementById(target || '');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>

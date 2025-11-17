@@ -1,0 +1,152 @@
+---
+import Card from './Card.astro';
+import Icon from './Icon.astro';
+import Tag from './Tag.astro';
+
+interface Props {
+  company: string;
+  position: string;
+  period: string;
+  description: string;
+  achievements: string[];
+  stack: string[];
+}
+
+const { company, position, period, description, achievements, stack } = Astro.props;
+---
+
+<Card>
+  <article class="experience-card">
+    <header class="card-top">
+      <div class="title-group">
+        <h3>{position}</h3>
+        <div class="company">
+          <Icon name="briefcase" size="sm" />
+          <span>{company}</span>
+        </div>
+      </div>
+      <div class="period">
+        <Icon name="calendar" size="sm" />
+        <span>{period}</span>
+      </div>
+    </header>
+
+    <p class="description">{description}</p>
+
+    <div class="achievements">
+      <p class="achievements-title">
+        <span class="comment">//</span> Logros destacados:
+      </p>
+      <ul class="achievements-list">
+        {achievements.map((achievement) => (
+          <li>
+            <span class="arrow">→</span>
+            <span>{achievement}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="stack">
+      {stack.map((tech) => <Tag>{tech}</Tag>)}
+    </div>
+  </article>
+</Card>
+
+<style>
+  .experience-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .title-group h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+    font-family: var(--font-mono);
+    margin-bottom: 0.25rem;
+  }
+
+  .company {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    font-family: var(--font-mono);
+  }
+
+  .period {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted-foreground);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .description {
+    color: var(--muted-foreground);
+    line-height: 1.75;
+  }
+
+  .achievements {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .achievements-title {
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    color: var(--primary);
+  }
+
+  .comment {
+    color: var(--muted-foreground);
+  }
+
+  .achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .achievements-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+  }
+
+  .arrow {
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .card-top {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+import { getCollection } from "astro:content";
+import ExperienceCard from "../ui/ExperienceCard.astro";
+import Card from "../ui/Card.astro";
+
+const experiences = await getCollection("experience");
+const sortedExperiences = experiences.sort(
+	(a, b) => a.data.order - b.data.order,
+);
+---
+
+<section
+	id="experience"
+	class="experience-section">
+	<div class="container">
+		<header class="section-header">
+			<h2>
+				<span class="prompt">$</span> git log --experience
+			</h2>
+			<p class="description">
+				Si prefieres ir directo al grano, aquí está mi trayectoria profesional.
+			</p>
+		</header>
+
+		<div class="experience-list">
+			{
+				sortedExperiences.map((exp) => (
+					<ExperienceCard
+						company={exp.data.company}
+						position={exp.data.position}
+						period={exp.data.period}
+						description={exp.data.description}
+						achievements={exp.data.achievements}
+						stack={exp.data.stack}
+					/>
+				))
+			}
+		</div>
+
+		<Card class="contact-card">
+			<p class="contact-prompt">
+				<span class="prompt">$</span> echo "¿Quieres trabajar juntos?"
+			</p>
+			<div class="contact-links">
+				<a
+					href="mailto:work@reddsito.dev"
+					class="contact-link"
+					>→ Email</a
+				>
+				<a
+					href="https://github.com/reddsito"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="contact-link"
+					>→ GitHub</a
+				>
+				<a
+					href="https://linkedin.com/in/enriquerini12"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="contact-link"
+					>→ LinkedIn</a
+				>
+			</div>
+		</Card>
+	</div>
+</section>
+
+<style>
+	.experience-section {
+		min-height: 100vh;
+		padding: 5rem 1rem;
+	}
+
+	.container {
+		max-width: 64rem;
+		margin: 0 auto;
+	}
+
+	.section-header {
+		margin-bottom: 3rem;
+		font-family: var(--font-mono);
+	}
+
+	.section-header h2 {
+		font-size: 2rem;
+		font-weight: 700;
+		color: var(--foreground);
+		margin-bottom: 1rem;
+	}
+
+	.prompt {
+		color: var(--primary);
+	}
+
+	.description {
+		color: var(--muted-foreground);
+		font-size: 1.125rem;
+		line-height: 1.75;
+	}
+
+	.experience-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	.experience-section :global(.contact-card) {
+		font-family: var(--font-mono);
+		text-align: center;
+	}
+
+	.contact-prompt {
+		color: var(--muted-foreground);
+		margin-bottom: 1rem;
+	}
+
+	.contact-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem;
+		font-size: 0.875rem;
+	}
+
+	.contact-link {
+		color: var(--primary);
+		text-decoration: none;
+		transition: color var(--transition-base);
+	}
+
+	.contact-link:hover {
+		color: var(--accent);
+	}
+
+	@media (min-width: 640px) {
+		.section-header h2 {
+			font-size: 2.5rem;
+		}
+	}
+</style>

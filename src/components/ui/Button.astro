@@ -1,0 +1,91 @@
+---
+interface Props {
+  variant?: 'primary' | 'ghost' | 'link';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  ariaLabel?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  href,
+  type = 'button',
+  ariaLabel,
+  ...rest
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+---
+
+<Element
+  class:list={['btn', `btn-${variant}`, `btn-${size}`, className]}
+  href={href}
+  type={!href ? type : undefined}
+  aria-label={ariaLabel}
+  {...rest}
+>
+  <slot />
+</Element>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    background: none;
+  }
+
+  /* Variants */
+  .btn-primary {
+    color: var(--primary);
+    background: transparent;
+  }
+
+  .btn-primary:hover {
+    color: var(--accent);
+  }
+
+  .btn-ghost {
+    color: var(--muted-foreground);
+  }
+
+  .btn-ghost:hover {
+    color: var(--foreground);
+  }
+
+  .btn-link {
+    color: var(--primary);
+    padding: 0;
+  }
+
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Sizes */
+  .btn-sm {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .btn-md {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .btn-lg {
+    font-size: 1.125rem;
+    padding: 0.75rem 1.5rem;
+  }
+</style>

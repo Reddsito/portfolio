@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../ui/ProjectCard.astro';
+import Card from '../ui/Card.astro';
+
+const projects = await getCollection('projects');
+const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="projects" class="projects-section">
+  <div class="container">
+    <header class="section-header">
+      <h2>
+        <span class="prompt">$</span> cat projects.log
+      </h2>
+      <p class="description">
+        Cada proyecto incluye documentación detallada en Notion sobre el proceso de aprendizaje, desafíos
+        encontrados y soluciones implementadas.
+      </p>
+    </header>
+
+    <div class="projects-grid">
+      {sortedProjects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          icon={project.data.icon as any}
+          notionUrl={project.data.notionUrl}
+          tags={project.data.tags}
+        />
+      ))}
+    </div>
+
+    <Card class="note-card">
+      <p>
+        <span class="comment">//</span> Estos proyectos representan mi curiosidad y pasión por entender
+        cómo funcionan las cosas a bajo nivel. No son solo código — son mi proceso de aprendizaje documentado.
+      </p>
+    </Card>
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    min-height: 100vh;
+    padding: 5rem 1rem;
+  }
+
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    font-family: var(--font-mono);
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+  }
+
+  .prompt {
+    color: var(--primary);
+  }
+
+  .description {
+    color: var(--muted-foreground);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .projects-section :global(.note-card) {
+    font-family: var(--font-mono);
+  }
+
+  .projects-section :global(.note-card) p {
+    color: var(--muted-foreground);
+  }
+
+  .comment {
+    color: var(--primary);
+  }
+
+  @media (min-width: 640px) {
+    .section-header h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+interface Props {
+  variant?: 'default' | 'hover';
+  class?: string;
+}
+
+const { variant = 'default', class: className = '' } = Astro.props;
+---
+
+<div class:list={['card', `card-${variant}`, className]}>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background: rgba(var(--card-rgb), 0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+
+  .card-hover {
+    transition: border-color var(--transition-base);
+  }
+
+  .card-hover:hover {
+    border-color: var(--primary);
+  }
+</style>

@@ -68,13 +68,13 @@ Ver [ARCHITECTURE.md](./ARCHITECTURE.md) para más detalles.
 ## Instalación
 
 ```bash
-npm install
+ppnpm install
 ```
 
 ## Desarrollo
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 El servidor de desarrollo estará disponible en `http://localhost:4321`
@@ -82,7 +82,7 @@ El servidor de desarrollo estará disponible en `http://localhost:4321`
 ## Build
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Los archivos se generarán en el directorio `dist/`
@@ -90,7 +90,7 @@ Los archivos se generarán en el directorio `dist/`
 ## Preview
 
 ```bash
-npm run preview
+pnpm run preview
 ```
 
 ## Agregar Proyectos
@@ -143,11 +143,11 @@ Los colores se pueden personalizar editando las variables CSS en `src/styles/glo
 
 ```css
 :root {
-  --background: oklch(0.08 0 0);
-  --foreground: oklch(0.98 0 0);
-  --primary: oklch(0.95 0 0);
-  --accent: oklch(0.9 0 0);
-  /* ... más variables */
+	--background: oklch(0.08 0 0);
+	--foreground: oklch(0.98 0 0);
+	--primary: oklch(0.95 0 0);
+	--accent: oklch(0.9 0 0);
+	/* ... más variables */
 }
 ```
 
@@ -164,6 +164,7 @@ Edita los enlaces en `src/components/Experience.astro` en la sección de contact
 ## Buenas Prácticas Implementadas
 
 ### CSS
+
 - ✅ Variables CSS para temas consistentes
 - ✅ Mobile-first responsive design
 - ✅ Scoped styles en componentes
@@ -171,6 +172,7 @@ Edita los enlaces en `src/components/Experience.astro` en la sección de contact
 - ✅ Sistema de spacing y tipografía escalable
 
 ### Astro
+
 - ✅ Content Collections para contenido estructurado
 - ✅ Zero JavaScript por defecto (solo donde es necesario)
 - ✅ Componentes modulares y reutilizables
@@ -178,6 +180,7 @@ Edita los enlaces en `src/components/Experience.astro` en la sección de contact
 - ✅ TypeScript para type-safety
 
 ### Performance
+
 - ✅ Mínimas dependencias externas
 - ✅ CSS optimizado y con scope
 - ✅ Imágenes y assets optimizados
@@ -185,10 +188,10 @@ Edita los enlaces en `src/components/Experience.astro` en la sección de contact
 
 ## Scripts Disponibles
 
-- `npm run dev` - Inicia servidor de desarrollo
-- `npm run build` - Construye para producción
-- `npm run preview` - Preview del build de producción
-- `npm run astro` - Ejecuta comandos de Astro CLI
+- `pnpm run dev` - Inicia servidor de desarrollo
+- `pnpm run build` - Construye para producción
+- `pnpm run preview` - Preview del build de producción
+- `pnpm run astro` - Ejecuta comandos de Astro CLI
 
 ## Licencia
 

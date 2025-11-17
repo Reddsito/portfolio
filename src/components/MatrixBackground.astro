@@ -6,8 +6,16 @@
 <script>
 	const canvas = document.getElementById("matrix-canvas") as HTMLCanvasElement;
 	const ctx = canvas.getContext("2d");
+	const savedTheme = localStorage.getItem("theme") || "dark";
 
 	if (ctx) {
+		let fadeStyle =
+			savedTheme === "dark"
+				? "rgba(13, 13, 13, 0.05)"
+				: "rgba(255, 255, 255, 0.05)";
+		let textStyle =
+			savedTheme === "dark" ? "rgba(240, 240, 240, 0.85)" : "rgba(0, 0, 0, 1)";
+
 		// Set canvas size
 		function resizeCanvas() {
 			canvas.width = window.innerWidth;
@@ -37,7 +45,10 @@
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 			// Text style
-			ctx.fillStyle = "rgba(240, 240, 240, 0.85)";
+			ctx.fillStyle = fadeStyle;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			ctx.fillStyle = textStyle;
 			ctx.font = `${fontSize}px monospace`;
 
 			// Draw characters
@@ -63,6 +74,16 @@
 		document.addEventListener("astro:before-swap", () => {
 			clearInterval(interval);
 			window.removeEventListener("resize", resizeCanvas);
+		});
+
+		window.addEventListener("themechange", (e) => {
+			const theme = (e as CustomEvent<{ theme: string }>).detail.theme;
+			fadeStyle =
+				theme === "dark"
+					? "rgba(13, 13, 13, 0.05)"
+					: "rgba(255, 255, 255, 0.05)";
+			textStyle =
+				theme === "dark" ? "rgba(240, 240, 240, 0.85)" : "rgba(0, 0, 0, 1)";
 		});
 	}
 </script>

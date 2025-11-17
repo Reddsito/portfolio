@@ -1,12 +1,6 @@
 ---
-import { getCollection } from "astro:content";
-import ExperienceCard from "../ui/ExperienceCard.astro";
+import ExperienceList from "../ui/ExperienceList.astro";
 import Card from "../ui/Card.astro";
-
-const experiences = await getCollection("experience");
-const sortedExperiences = experiences.sort(
-	(a, b) => a.data.order - b.data.order,
-);
 ---
 
 <section
@@ -15,36 +9,30 @@ const sortedExperiences = experiences.sort(
 	<div class="container">
 		<header class="section-header">
 			<h2>
-				<span class="prompt">$</span> git log --experience
+				<span class="prompt">$</span>
+				<span data-i18n="experience.title">git log --experience</span>
 			</h2>
-			<p class="description">
+			<p
+				class="description"
+				data-i18n="experience.description">
 				Si prefieres ir directo al grano, aquí está mi trayectoria profesional.
 			</p>
 		</header>
 
-		<div class="experience-list">
-			{
-				sortedExperiences.map((exp) => (
-					<ExperienceCard
-						company={exp.data.company}
-						position={exp.data.position}
-						period={exp.data.period}
-						description={exp.data.description}
-						achievements={exp.data.achievements}
-						stack={exp.data.stack}
-					/>
-				))
-			}
-		</div>
+		<ExperienceList />
 
 		<Card class="contact-card">
 			<p class="contact-prompt">
-				<span class="prompt">$</span> echo "¿Quieres trabajar juntos?"
+				<span class="prompt">$</span>
+				<span data-i18n="experience.contact.prompt"
+					>echo "¿Quieres trabajar juntos?"</span
+				>
 			</p>
 			<div class="contact-links">
 				<a
 					href="mailto:work@reddsito.dev"
 					class="contact-link"
+					data-i18n="experience.contact.email"
 					>→ Email</a
 				>
 				<a
@@ -52,6 +40,7 @@ const sortedExperiences = experiences.sort(
 					target="_blank"
 					rel="noopener noreferrer"
 					class="contact-link"
+					data-i18n="experience.contact.github"
 					>→ GitHub</a
 				>
 				<a
@@ -59,6 +48,7 @@ const sortedExperiences = experiences.sort(
 					target="_blank"
 					rel="noopener noreferrer"
 					class="contact-link"
+					data-i18n="experience.contact.linkedin"
 					>→ LinkedIn</a
 				>
 			</div>
@@ -99,10 +89,7 @@ const sortedExperiences = experiences.sort(
 		line-height: 1.75;
 	}
 
-	.experience-list {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
+	.experience-section :global(.experience-list) {
 		margin-bottom: 3rem;
 	}
 

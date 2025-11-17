@@ -1,40 +1,24 @@
 ---
-import { getCollection } from 'astro:content';
-import ProjectCard from '../ui/ProjectCard.astro';
+import ProjectsList from '../ui/ProjectsList.astro';
 import Card from '../ui/Card.astro';
-
-const projects = await getCollection('projects');
-const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <section id="projects" class="projects-section">
   <div class="container">
     <header class="section-header">
       <h2>
-        <span class="prompt">$</span> cat projects.log
+        <span class="prompt">$</span> <span data-i18n="projects.title">cat projects.log</span>
       </h2>
-      <p class="description">
-        Cada proyecto incluye documentación detallada en Notion sobre el proceso de aprendizaje, desafíos
-        encontrados y soluciones implementadas.
+      <p class="description" data-i18n="projects.description">
+        Cada proyecto incluye documentación detallada en Notion sobre el proceso de aprendizaje, desafíos encontrados y soluciones implementadas.
       </p>
     </header>
 
-    <div class="projects-grid">
-      {sortedProjects.map((project) => (
-        <ProjectCard
-          title={project.data.title}
-          description={project.data.description}
-          icon={project.data.icon as any}
-          notionUrl={project.data.notionUrl}
-          tags={project.data.tags}
-        />
-      ))}
-    </div>
+    <ProjectsList />
 
     <Card class="note-card">
       <p>
-        <span class="comment">//</span> Estos proyectos representan mi curiosidad y pasión por entender
-        cómo funcionan las cosas a bajo nivel. No son solo código — son mi proceso de aprendizaje documentado.
+        <span class="comment">//</span> <span data-i18n="projects.note">Estos proyectos representan mi curiosidad y pasión por entender cómo funcionan las cosas a bajo nivel. No son solo código — son mi proceso de aprendizaje documentado.</span>
       </p>
     </Card>
   </div>
@@ -73,10 +57,7 @@ const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
     line-height: 1.75;
   }
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+  .projects-section :global(.projects-grid) {
     margin-bottom: 3rem;
   }
 
@@ -95,12 +76,6 @@ const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
   @media (min-width: 640px) {
     .section-header h2 {
       font-size: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .projects-grid {
-      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

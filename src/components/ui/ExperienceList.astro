@@ -1,0 +1,82 @@
+---
+import ExperienceCard from './ExperienceCard.astro';
+import { experienceData } from '../../i18n/data';
+
+// Default to Spanish for SSR
+const experiences = experienceData.es;
+---
+
+<div class="experience-list">
+  {experiences.map(exp => (
+    <div data-experience-id={exp.id}>
+      <ExperienceCard
+        company={exp.company}
+        position={exp.position}
+        period={exp.period}
+        description={exp.description}
+        achievements={exp.achievements}
+        stack={exp.stack}
+      />
+    </div>
+  ))}
+</div>
+
+<script>
+  import { getCurrentLang } from '../../i18n/client';
+  import { experienceData } from '../../i18n/data';
+  import { ui } from '../../i18n/ui';
+
+  function updateExperiences() {
+    const lang = getCurrentLang();
+    const experiences = experienceData[lang];
+
+    // Update each experience's content
+    experiences.forEach(exp => {
+      const expEl = document.querySelector(`[data-experience-id="${exp.id}"]`);
+      if (expEl) {
+        // Update position (h3)
+        const positionEl = expEl.querySelector('h3');
+        if (positionEl) positionEl.textContent = exp.position;
+
+        // Update period
+        const periodEl = expEl.querySelector('.period span');
+        if (periodEl) periodEl.textContent = exp.period;
+
+        // Update description
+        const descEl = expEl.querySelector('.description');
+        if (descEl) descEl.textContent = exp.description;
+
+        // Update achievements title
+        const achievementsTitleEl = expEl.querySelector('.achievements-title');
+        if (achievementsTitleEl) {
+          achievementsTitleEl.innerHTML = `<span class="comment">//</span> ${ui[lang]['experience.achievements'].replace('//', '').trim()}`;
+        }
+
+        // Update achievements list
+        const achievementsListEl = expEl.querySelector('.achievements-list');
+        if (achievementsListEl) {
+          achievementsListEl.innerHTML = exp.achievements.map(achievement => `
+            <li>
+              <span class="arrow">→</span>
+              <span>${achievement}</span>
+            </li>
+          `).join('');
+        }
+      }
+    });
+  }
+
+  // Initial update
+  updateExperiences();
+
+  // Update on language change
+  window.addEventListener('langchange', updateExperiences);
+</script>
+
+<style>
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

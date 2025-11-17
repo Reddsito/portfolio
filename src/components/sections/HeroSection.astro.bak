@@ -1,15 +1,12 @@
 ---
 import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 ---
 
 <section class="hero">
   <div class="hero-container">
     <Card class="terminal-card">
-      <div class="greeting">
-        <span class="greeting-text" data-i18n="hero.greeting"></span>
-        <h1 class="name">Enrique Querini</h1>
-      </div>
-
       <div class="terminal-header">
         <span class="prompt">$</span>
         <span class="typing-text" id="typing-text"></span>
@@ -18,42 +15,45 @@ import Card from '../ui/Card.astro';
 
       <div class="content">
         <p class="comment">
-          <span class="comment-mark">//</span> <span data-i18n="hero.intro.comment"></span>
+          <span class="comment-mark">//</span> El trabajo de backend es invisible pero fundamental
         </p>
 
         <p class="text-primary">
-          <span data-i18n="hero.intro.p1"></span> <strong data-i18n="hero.intro.p1.bold"></strong> <span data-i18n="hero.intro.p1.rest"></span>
+          Como backend developer, trabajo en la <strong>oscuridad</strong> —
+          construyendo la infraestructura que nadie ve pero todos necesitan.
         </p>
 
-        <p class="text-muted" data-i18n="hero.intro.p2">
+        <p class="text-muted">
+          Es difícil mostrar visualmente lo que hago: servidores, APIs, bases de datos, colas de mensajes,
+          autenticación... Todo sucede detrás de escena.
         </p>
 
         <div class="divider"></div>
 
         <p class="text-primary">
-          <span class="arrow">→</span> <span data-i18n="hero.intro.p3"></span>
+          <span class="arrow">→</span> Por eso creé mini proyectos educativos
         </p>
-        <p class="text-muted indent" data-i18n="hero.intro.p4">
+        <p class="text-muted indent">
+          Cada uno documenta mi proceso de aprendizaje: desde crear mi propio servidor web, implementar
+          autenticación, trabajar con colas, hasta el despliegue completo.
         </p>
 
         <div class="code-block">
           <p>
-            <span class="keyword" data-i18n="hero.code.if"></span> (quieres.ver === <span class="string">'<span data-i18n="hero.code.experience"></span>'</span>) {
-            <button class="link scroll-btn" data-target="experience" data-i18n="hero.code.experience.link"></button> }
+            <span class="keyword">if</span> (quieres.ver === <span class="string">'experiencia'</span>) {
+            <button class="link scroll-btn" data-target="experience">salta a experiencia</button> }
           </p>
           <p>
-            <span class="keyword" data-i18n="hero.code.else"></span> (quieres.ver === <span class="string">'<span data-i18n="hero.code.passion"></span>'</span>) {
-            <button class="link scroll-btn" data-target="projects" data-i18n="hero.code.projects.link"></button> }
+            <span class="keyword">else if</span> (quieres.ver === <span class="string">'pasión'</span>) {
+            <button class="link scroll-btn" data-target="projects">explora proyectos</button> }
           </p>
         </div>
       </div>
     </Card>
 
-    <button class="scroll-indicator" data-target="projects" aria-label="Scroll to projects">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14m0 0l-7-7m7 7l7-7"/>
-      </svg>
-    </button>
+    <Button variant="ghost" class="scroll-indicator" data-target="projects" ariaLabel="Scroll to projects">
+      <Icon name="arrow-down" size="md" />
+    </Button>
   </div>
 </section>
 
@@ -77,24 +77,6 @@ import Card from '../ui/Card.astro';
   .hero :global(.terminal-card) {
     padding: 3rem 2rem;
     font-family: var(--font-mono);
-  }
-
-  .greeting {
-    margin-bottom: 1.5rem;
-  }
-
-  .greeting-text {
-    display: block;
-    font-size: 1.125rem;
-    color: var(--muted-foreground);
-    margin-bottom: 0.5rem;
-  }
-
-  .name {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary);
-    line-height: 1.2;
   }
 
   .terminal-header {
@@ -205,26 +187,7 @@ import Card from '../ui/Card.astro';
 
   .scroll-indicator {
     margin: 0 auto;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary);
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.3s;
     animation: bounce 2s infinite;
-  }
-
-  .scroll-indicator:hover {
-    color: var(--accent);
-  }
-
-  .scroll-indicator svg {
-    width: 1.5rem;
-    height: 1.5rem;
   }
 
   @keyframes bounce {
@@ -236,19 +199,10 @@ import Card from '../ui/Card.astro';
     .hero :global(.terminal-card) {
       padding: 3rem;
     }
-
-    .name {
-      font-size: 3rem;
-    }
   }
 </style>
 
 <script>
-  import { updateTranslations } from '../../i18n/client';
-
-  // Initial translations
-  updateTranslations();
-
   // Typing effect
   const typingText = document.getElementById('typing-text');
   const fullText = '> Backend Developer';

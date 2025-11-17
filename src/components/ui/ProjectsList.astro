@@ -1,0 +1,63 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projectsData } from '../../i18n/data';
+
+// Default to Spanish for SSR
+const projects = projectsData.es;
+---
+
+<div class="projects-grid">
+  {projects.map(project => (
+    <div data-project-id={project.id}>
+      <ProjectCard
+        title={project.title}
+        description={project.description}
+        icon={project.icon}
+        tags={project.tags}
+        notionUrl={project.notionUrl}
+      />
+    </div>
+  ))}
+</div>
+
+<script>
+  import { getCurrentLang } from '../../i18n/client';
+  import { projectsData } from '../../i18n/data';
+
+  function updateProjects() {
+    const lang = getCurrentLang();
+    const projects = projectsData[lang];
+
+    // Update each project's content
+    projects.forEach(project => {
+      const projectEl = document.querySelector(`[data-project-id="${project.id}"]`);
+      if (projectEl) {
+        const titleEl = projectEl.querySelector('h3');
+        const descEl = projectEl.querySelector('p');
+
+        if (titleEl) titleEl.textContent = project.title;
+        if (descEl) descEl.textContent = project.description;
+      }
+    });
+  }
+
+  // Initial update
+  updateProjects();
+
+  // Update on language change
+  window.addEventListener('langchange', updateProjects);
+</script>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

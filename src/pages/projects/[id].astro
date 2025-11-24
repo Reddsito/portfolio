@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/ui/Card.astro";
+import Footer from "../../components/sections/Footer.astro";
+import Controls from "../../components/ui/Controls.astro";
 import { projectsData } from "../../i18n/data";
 
 export function getStaticPaths() {
@@ -33,6 +35,7 @@ const icons: Record<string, string> = {
 ---
 
 <Layout title={`${project.title} - Enrique Querini`} description={project.description}>
+	<Controls />
 	<main class="project-detail">
 		<div class="container">
 			<a href="/#projects" class="back-link">
@@ -55,6 +58,7 @@ const icons: Record<string, string> = {
 			</div>
 		</div>
 	</main>
+	<Footer />
 </Layout>
 
 <script>
@@ -199,17 +203,16 @@ const icons: Record<string, string> = {
 	}
 
 	.coming-soon {
-		padding: 3rem 2rem;
-		background: var(--card);
-		border: 1px solid var(--border);
-		border-radius: 0.5rem;
+		margin-top: 2rem;
+		padding: 4rem 2rem;
 		text-align: center;
 	}
 
 	.coming-soon p {
-		font-size: 1.25rem;
+		font-size: 1.75rem;
 		color: var(--muted-foreground);
 		font-family: var(--font-mono);
+		font-weight: 500;
 	}
 
 	@media (min-width: 640px) {

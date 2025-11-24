@@ -88,45 +88,9 @@ const icons: Record<string, string> = {
 					<p>${details.overview.content}</p>
 				</div>
 
-				<div class="section">
-					<h2>${details.challenge.title}</h2>
-					<p>${details.challenge.content}</p>
+				<div class="coming-soon">
+					<p>${details.comingSoon}</p>
 				</div>
-
-				<div class="section">
-					<h2>${details.solution.title}</h2>
-					<p>${details.solution.content}</p>
-				</div>
-
-				<div class="section">
-					<h2>${details.technical.title}</h2>
-					<ul>
-						${details.technical.items.map(item => `<li>${item}</li>`).join('')}
-					</ul>
-				</div>
-
-				<div class="section">
-					<h2>${details.learnings.title}</h2>
-					<ul>
-						${details.learnings.items.map(item => `<li>${item}</li>`).join('')}
-					</ul>
-				</div>
-
-				${details.images ? `
-					<div class="section">
-						<h2>${details.images.title}</h2>
-						<div class="images-grid">
-							${details.images.items.map(img => `
-								<div class="image-card">
-									<div class="image-placeholder">
-										<span>${img.placeholder}</span>
-									</div>
-									<p class="image-caption">${img.caption}</p>
-								</div>
-							`).join('')}
-						</div>
-					</div>
-				` : ''}
 			`;
 		}
 	}
@@ -234,55 +198,18 @@ const icons: Record<string, string> = {
 		margin-bottom: 1rem;
 	}
 
-	.section ul {
-		list-style: none;
-		padding: 0;
-	}
-
-	.section ul li {
-		padding: 0.75rem 0;
-		padding-left: 1.5rem;
-		position: relative;
-		line-height: 1.75;
-		color: var(--foreground);
-	}
-
-	.section ul li::before {
-		content: "→";
-		position: absolute;
-		left: 0;
-		color: var(--primary);
-	}
-
-	.images-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1.5rem;
-		margin-top: 1.5rem;
-	}
-
-	.image-card {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.image-placeholder {
-		width: 100%;
-		aspect-ratio: 16/9;
-		background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-		border-radius: 0.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 3rem;
+	.coming-soon {
+		padding: 3rem 2rem;
+		background: var(--card);
 		border: 1px solid var(--border);
+		border-radius: 0.5rem;
+		text-align: center;
 	}
 
-	.image-caption {
-		font-size: 0.875rem;
+	.coming-soon p {
+		font-size: 1.25rem;
 		color: var(--muted-foreground);
-		text-align: center;
+		font-family: var(--font-mono);
 	}
 
 	@media (min-width: 640px) {

@@ -50,8 +50,9 @@ const technologies = Array.from(allTechs).sort();
 	import { getCurrentLang } from "../../i18n/client";
 
 	function setupTechFilter() {
-		const buttons = document.querySelectorAll(".tech-button");
-		const experienceElements = document.querySelectorAll(
+		const buttons =
+			document.querySelectorAll<HTMLButtonElement>(".tech-button");
+		const experienceElements = document.querySelectorAll<HTMLDivElement>(
 			"[data-experience-id]",
 		);
 

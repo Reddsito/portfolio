@@ -1,7 +1,6 @@
 ---
 import ExperienceList from "../ui/ExperienceList.astro";
 import TechFilter from "../ui/TechFilter.astro";
-import Card from "../ui/Card.astro";
 ---
 
 <section
@@ -23,39 +22,6 @@ import Card from "../ui/Card.astro";
 		<TechFilter />
 
 		<ExperienceList />
-
-		<Card class="contact-card">
-			<p class="contact-prompt">
-				<span class="prompt">$</span>
-				<span data-i18n="experience.contact.prompt"
-					>echo "¿Quieres trabajar juntos?"</span
-				>
-			</p>
-			<div class="contact-links">
-				<a
-					href="mailto:work@reddsito.dev"
-					class="contact-link"
-					data-i18n="experience.contact.email"
-					>→ Email</a
-				>
-				<a
-					href="https://github.com/reddsito"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="contact-link"
-					data-i18n="experience.contact.github"
-					>→ GitHub</a
-				>
-				<a
-					href="https://linkedin.com/in/enriquequerini"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="contact-link"
-					data-i18n="experience.contact.linkedin"
-					>→ LinkedIn</a
-				>
-			</div>
-		</Card>
 	</div>
 </section>
 
@@ -94,34 +60,6 @@ import Card from "../ui/Card.astro";
 
 	.experience-section :global(.experience-list) {
 		margin-bottom: 3rem;
-	}
-
-	.experience-section :global(.contact-card) {
-		font-family: var(--font-mono);
-		text-align: center;
-	}
-
-	.contact-prompt {
-		color: var(--muted-foreground);
-		margin-bottom: 1rem;
-	}
-
-	.contact-links {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 1rem;
-		font-size: 0.875rem;
-	}
-
-	.contact-link {
-		color: var(--primary);
-		text-decoration: none;
-		transition: color var(--transition-base);
-	}
-
-	.contact-link:hover {
-		color: var(--accent);
 	}
 
 	@media (min-width: 640px) {

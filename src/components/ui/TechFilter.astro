@@ -1,0 +1,329 @@
+---
+// Extract unique technologies from all experiences
+import { experienceData } from "../../i18n/data";
+import TechIcon from "./TechIcon.astro";
+
+const allTechs = new Set<string>();
+[...experienceData.es, ...experienceData.en].forEach((exp) => {
+	exp.stack.forEach((tech) => allTechs.add(tech));
+});
+
+const technologies = Array.from(allTechs).sort();
+---
+
+<div class="tech-filter-container">
+	<div class="tech-filter">
+		<button
+			class="tech-button active"
+			data-tech="all"
+			aria-label="Show all experiences">
+			<div class="tech-content">
+				<span class="tech-icon all-icon">✨</span>
+				<span
+					class="tech-label"
+					data-i18n="experience.filter.all"
+					>Todas</span
+				>
+			</div>
+		</button>
+		{
+			technologies.map((tech) => (
+				<button
+					class="tech-button"
+					data-tech={tech}
+					aria-label={`Filter by ${tech}`}>
+					<div class="tech-content">
+						<TechIcon
+							tech={tech}
+							class="tech-icon-component"
+						/>
+						<span class="tech-label">{tech}</span>
+					</div>
+				</button>
+			))
+		}
+	</div>
+</div>
+
+<script>
+	import { experienceData } from "../../i18n/data";
+	import { getCurrentLang } from "../../i18n/client";
+
+	function setupTechFilter() {
+		const buttons = document.querySelectorAll(".tech-button");
+		const experienceElements = document.querySelectorAll(
+			"[data-experience-id]",
+		);
+
+		buttons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const selectedTech = button.getAttribute("data-tech");
+
+				// Update active state with animation
+				buttons.forEach((btn) => {
+					btn.classList.remove("active");
+					btn.style.transform = "scale(0.9)";
+					setTimeout(() => {
+						btn.style.transform = "";
+					}, 150);
+				});
+				button.classList.add("active");
+				button.style.transform = "scale(1.1)";
+				setTimeout(() => {
+					button.style.transform = "";
+				}, 150);
+
+				// Filter experiences with cool animations
+				const lang = getCurrentLang();
+				const experiences = experienceData[lang];
+
+				experienceElements.forEach((expEl, index) => {
+					const expId = expEl.getAttribute("data-experience-id");
+					const expData = experiences.find((e) => e.id === expId);
+
+					if (!expData) return;
+
+					const shouldShow =
+						selectedTech === "all" ||
+						expData.stack.includes(selectedTech as string);
+
+					if (shouldShow) {
+						// Staggered fade-in animation
+						expEl.classList.remove("filtered-out");
+						expEl.style.animation = "none";
+						setTimeout(() => {
+							expEl.style.animation = `slideInUp 0.5s ease-out ${index * 0.1}s both`;
+						}, 10);
+					} else {
+						// Fade out animation
+						expEl.classList.add("filtered-out");
+						expEl.style.animation = "fadeOutDown 0.3s ease-out both";
+					}
+				});
+			});
+		});
+	}
+
+	// Initialize
+	setupTechFilter();
+
+	// Re-initialize on language change
+	window.addEventListener("langchange", () => {
+		setTimeout(setupTechFilter, 100);
+	});
+</script>
+
+<style>
+	.tech-filter-container {
+		margin-bottom: 2rem;
+	}
+
+	.tech-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		padding: 0.5rem 0;
+	}
+
+	.tech-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem 0.5rem;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: 0.75rem;
+		color: var(--foreground);
+		cursor: pointer;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		width: 95px;
+		flex-shrink: 0;
+	}
+
+	.tech-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.35rem;
+		position: relative;
+		z-index: 1;
+		width: 100%;
+	}
+
+	.tech-button::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		z-index: 0;
+	}
+
+	.tech-button:hover::before {
+		opacity: 0.1;
+	}
+
+	.tech-button.active::before {
+		opacity: 0.15;
+	}
+
+	.tech-icon,
+	:global(.tech-icon-component) {
+		width: 48px;
+		height: 48px;
+		min-width: 48px;
+		min-height: 48px;
+		max-width: 48px;
+		max-height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.3s ease;
+		border-radius: 0.375rem;
+		flex-shrink: 0;
+	}
+
+	.tech-icon.all-icon {
+		font-size: 2.25rem;
+	}
+
+	.tech-label {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		line-height: 1;
+		text-align: center;
+		transition: color 0.3s ease;
+		max-width: 90px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.tech-button:hover .tech-icon,
+	.tech-button:hover :global(.tech-icon-component) {
+		transform: scale(1.15) rotate(5deg);
+	}
+
+	.tech-button.active .tech-icon,
+	.tech-button.active :global(.tech-icon-component) {
+		animation: bounce 0.6s ease;
+	}
+
+	.tech-button.active .tech-label {
+		color: var(--primary);
+		font-weight: 700;
+	}
+
+	.tech-button:hover {
+		transform: translateY(-2px);
+		border-color: var(--primary);
+		box-shadow:
+			0 4px 12px rgba(0, 0, 0, 0.1),
+			0 0 0 1px var(--primary) inset;
+	}
+
+	.tech-button.active {
+		background: var(--card);
+		border-color: var(--primary);
+		box-shadow:
+			0 4px 16px rgba(var(--primary-rgb), 0.2),
+			0 0 0 2px var(--primary) inset;
+		color: var(--primary);
+	}
+
+	.tech-button:active {
+		transform: scale(0.95);
+	}
+
+	/* Animations for filtering */
+	:global([data-experience-id]) {
+		transition: all 0.3s ease;
+	}
+
+	:global([data-experience-id].filtered-out) {
+		display: none;
+	}
+
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px) scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes fadeOutDown {
+		from {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(20px) scale(0.95);
+		}
+	}
+
+	@keyframes bounce {
+		0%,
+		100% {
+			transform: scale(1) rotate(0deg);
+		}
+		25% {
+			transform: scale(1.2) rotate(-10deg);
+		}
+		50% {
+			transform: scale(1.3) rotate(10deg);
+		}
+		75% {
+			transform: scale(1.2) rotate(-5deg);
+		}
+	}
+
+	/* Responsive */
+	@media (max-width: 640px) {
+		.tech-button {
+			width: 85px;
+			padding: 0.875rem 0.5rem;
+		}
+
+		.tech-icon,
+		:global(.tech-icon-component) {
+			width: 40px;
+			height: 40px;
+			min-width: 40px;
+			min-height: 40px;
+			max-width: 40px;
+			max-height: 40px;
+		}
+
+		.tech-icon.all-icon {
+			font-size: 1.875rem;
+		}
+
+		.tech-label {
+			font-size: 0.625rem;
+			max-width: 80px;
+		}
+
+		.tech-content {
+			gap: 0.3rem;
+		}
+	}
+
+	/* Glow effect for active button */
+	@media (prefers-color-scheme: dark) {
+		.tech-button.active {
+			box-shadow:
+				0 4px 16px rgba(var(--primary-rgb), 0.3),
+				0 0 0 2px var(--primary) inset,
+				0 0 20px rgba(var(--primary-rgb), 0.2);
+		}
+	}
+</style>

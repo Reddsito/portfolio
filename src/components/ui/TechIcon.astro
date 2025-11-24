@@ -1,0 +1,49 @@
+---
+interface Props {
+	tech: string;
+	class?: string;
+}
+
+const { tech, class: className } = Astro.props;
+
+// Map technology names to skillicons.dev icon IDs
+const techIconIds: Record<string, string> = {
+	"Node.js": "nodejs",
+	NestJS: "nestjs",
+	"Next.js": "nextjs",
+	PostgreSQL: "postgresql",
+	Redis: "redis",
+	Docker: "docker",
+	AWS: "aws",
+	Linux: "linux",
+	Python: "python",
+	Django: "django",
+	MySQL: "mysql",
+	Celery: "celery",
+	RabbitMQ: "rabbitmq",
+	Java: "java",
+	"Spring Boot": "spring",
+	Kafka: "kafka",
+	TypeScript: "typescript",
+	"React Native": "react",
+};
+
+const iconId = techIconIds[tech] || "javascript";
+const iconUrl = `https://skillicons.dev/icons?i=${iconId}`;
+---
+
+<img
+	src={iconUrl}
+	alt={tech}
+	class={`tech-icon-img ${className || ""}`}
+	loading="lazy"
+/>
+
+<style>
+	.tech-icon-img {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+	}
+</style>

@@ -116,90 +116,44 @@ export const projectsData = {
 export const experienceData = {
   es: [
     {
-      id: 'tech-startup',
-      company: "Tech Startup",
-      position: "Senior Backend Engineer",
-      period: "2022 - Presente",
-      description: "Arquitectura de microservicios escalables, optimización de bases de datos y liderazgo técnico del equipo backend.",
+      id: 'merkapp',
+      company: "Merkapp",
+      position: "Ingeniero de Software",
+      period: "2023 - Presente",
+      description: "Desarrollo full-stack de plataforma de e-commerce y logística. Migración completa de Ruby on Rails a NestJS, integraciones con Uber Direct y PedidosYa, sistema de pagos, panel administrativo y app mobile para pickers.",
       achievements: [
-        "Reduje el tiempo de respuesta de APIs en 60% mediante caching estratégico",
-        "Implementé sistema de colas que procesa 1M+ mensajes diarios",
-        "Migré monolito a microservicios sin downtime"
+        "Migré backend completo de Ruby on Rails a NestJS con PostgreSQL, Redis y AWS",
+        "Implementé integración con Uber Direct (API REST, webhooks, tracking en tiempo real con Socket.io)",
+        "Desarrollé pasarelas de pago Yappy y Cybersource con tokenización, 3DS y prevención de fraude",
+        "Creé panel administrativo completo con dashboards, asignación de órdenes en tiempo real y gestión de roles",
+        "Desarrollé app mobile React Native para pickers con escaneo de productos, rutas y notificaciones WhatsApp",
+        "Integré API de PedidosYa para sincronización de catálogo e inventario",
+        "Implementé sistema de logs con Loki y monitoreo de recursos con Prometheus para observabilidad completa",
+        "Configuré despliegue a producción con zero downtime usando estrategias de rolling updates en Docker, pipelines CI/CD en AWS y Digital Ocean"
       ],
-      stack: ["Node.js", "PostgreSQL", "Redis", "Docker", "AWS"],
+      stack: ["Node.js", "NestJS", "Next.js", "PostgreSQL", "Redis", "Docker", "AWS", "Linux", "React Native", "TypeScript"],
       order: 1
-    },
-    {
-      id: 'ecommerce',
-      company: "E-commerce Platform",
-      position: "Backend Developer",
-      period: "2020 - 2022",
-      description: "Desarrollo de APIs RESTful, integración de pasarelas de pago y optimización de queries de base de datos.",
-      achievements: [
-        "Desarrollé sistema de inventario en tiempo real",
-        "Integré múltiples pasarelas de pago (Stripe, PayPal)",
-        "Optimicé queries reduciendo carga de DB en 40%"
-      ],
-      stack: ["Python", "Django", "MySQL", "Celery", "RabbitMQ"],
-      order: 2
-    },
-    {
-      id: 'fintech',
-      company: "Fintech Company",
-      position: "Junior Backend Developer",
-      period: "2019 - 2020",
-      description: "Mantenimiento de APIs, implementación de features y trabajo con sistemas de autenticación seguros.",
-      achievements: [
-        "Implementé autenticación de dos factores",
-        "Contribuí a sistema de auditoría de transacciones",
-        "Mejoré cobertura de tests del 40% al 80%"
-      ],
-      stack: ["Java", "Spring Boot", "PostgreSQL", "Kafka"],
-      order: 3
     }
   ],
   en: [
     {
-      id: 'tech-startup',
-      company: "Tech Startup",
-      position: "Senior Backend Engineer",
-      period: "2022 - Present",
-      description: "Scalable microservices architecture, database optimization, and technical leadership of the backend team.",
+      id: 'merkapp',
+      company: "Merkapp",
+      position: "Software Engineer",
+      period: "2023 - Present",
+      description: "Full-stack development of e-commerce and logistics platform. Complete migration from Ruby on Rails to NestJS, integrations with Uber Direct and PedidosYa, payment systems, admin panel, and mobile app for pickers.",
       achievements: [
-        "Reduced API response time by 60% through strategic caching",
-        "Implemented queue system processing 1M+ daily messages",
-        "Migrated monolith to microservices with zero downtime"
+        "Migrated complete backend from Ruby on Rails to NestJS with PostgreSQL, Redis, and AWS",
+        "Implemented Uber Direct integration (REST API, webhooks, real-time tracking with Socket.io)",
+        "Developed Yappy and Cybersource payment gateways with tokenization, 3DS, and fraud prevention",
+        "Built complete admin panel with dashboards, real-time order assignment, and role management",
+        "Developed React Native mobile app for pickers with product scanning, routes, and WhatsApp notifications",
+        "Integrated PedidosYa API for catalog and inventory synchronization",
+        "Implemented logging system with Loki and resource monitoring with Prometheus for complete observability",
+        "Configured zero downtime production deployment using Docker rolling update strategies, CI/CD pipelines on AWS and Digital Ocean"
       ],
-      stack: ["Node.js", "PostgreSQL", "Redis", "Docker", "AWS"],
+      stack: ["Node.js", "NestJS", "Next.js", "PostgreSQL", "Redis", "Docker", "AWS", "Linux", "React Native", "TypeScript"],
       order: 1
-    },
-    {
-      id: 'ecommerce',
-      company: "E-commerce Platform",
-      position: "Backend Developer",
-      period: "2020 - 2022",
-      description: "RESTful API development, payment gateway integration, and database query optimization.",
-      achievements: [
-        "Developed real-time inventory system",
-        "Integrated multiple payment gateways (Stripe, PayPal)",
-        "Optimized queries reducing DB load by 40%"
-      ],
-      stack: ["Python", "Django", "MySQL", "Celery", "RabbitMQ"],
-      order: 2
-    },
-    {
-      id: 'fintech',
-      company: "Fintech Company",
-      position: "Junior Backend Developer",
-      period: "2019 - 2020",
-      description: "API maintenance, feature implementation, and work with secure authentication systems.",
-      achievements: [
-        "Implemented two-factor authentication",
-        "Contributed to transaction audit system",
-        "Improved test coverage from 40% to 80%"
-      ],
-      stack: ["Java", "Spring Boot", "PostgreSQL", "Kafka"],
-      order: 3
     }
   ]
 };

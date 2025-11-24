@@ -34,6 +34,7 @@ export const ui = {
 
     'experience.title': '$ git log --experience',
     'experience.description': 'Si prefieres ir directo al grano, aquí está mi trayectoria profesional.',
+    'experience.filter.all': 'Todas',
     'experience.achievements': '// Logros destacados:',
     'experience.contact.prompt': '$ echo "¿Quieres trabajar juntos?"',
     'experience.contact.email': '→ Email',
@@ -73,6 +74,7 @@ export const ui = {
 
     'experience.title': '$ git log --experience',
     'experience.description': 'If you prefer to get straight to the point, here\'s my professional background.',
+    'experience.filter.all': 'All',
     'experience.achievements': '// Key achievements:',
     'experience.contact.prompt': '$ echo "Want to work together?"',
     'experience.contact.email': '→ Email',

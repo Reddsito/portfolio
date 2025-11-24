@@ -1,0 +1,293 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/ui/Card.astro";
+import { projectsData } from "../../i18n/data";
+
+export function getStaticPaths() {
+	const allProjects = [...projectsData.es, ...projectsData.en];
+	const uniqueIds = [...new Set(allProjects.map(p => p.id))];
+
+	return uniqueIds.map((id) => ({
+		params: { id },
+	}));
+}
+
+const { id } = Astro.params;
+
+// Default to Spanish
+const project = projectsData.es.find(p => p.id === id);
+
+if (!project) {
+	return Astro.redirect('/404');
+}
+
+// Import icon component dynamically
+const icons: Record<string, string> = {
+	server: "⚡",
+	lock: "🔒",
+	database: "🗄️",
+	layers: "📦",
+	zap: "⚡",
+	cloud: "☁️"
+};
+---
+
+<Layout title={`${project.title} - Enrique Querini`} description={project.description}>
+	<main class="project-detail">
+		<div class="container">
+			<a href="/#projects" class="back-link">
+				<span>←</span> <span data-i18n="project.back">Volver a proyectos</span>
+			</a>
+
+			<header class="project-header">
+				<div class="icon">{icons[project.icon]}</div>
+				<h1 data-project-title={id}>{project.title}</h1>
+				<p class="description" data-project-description={id}>{project.description}</p>
+				<div class="tags">
+					{project.tags.map(tag => (
+						<span class="tag">{tag}</span>
+					))}
+				</div>
+			</header>
+
+			<div class="content" data-project-id={id}>
+				<!-- Content will be loaded dynamically based on language -->
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<script>
+	import { getCurrentLang } from '../../i18n/client';
+	import { projectDetailsData } from '../../i18n/projectDetails';
+	import { projectsData } from '../../i18n/data';
+
+	function updateContent() {
+		const lang = getCurrentLang();
+		const projectId = document.querySelector('[data-project-id]')?.getAttribute('data-project-id');
+
+		if (!projectId) return;
+
+		// Update title and description
+		const project = projectsData[lang].find(p => p.id === projectId);
+		if (project) {
+			const titleEl = document.querySelector('[data-project-title]');
+			const descEl = document.querySelector('[data-project-description]');
+			if (titleEl) titleEl.textContent = project.title;
+			if (descEl) descEl.textContent = project.description;
+		}
+
+		// Update detailed content
+		const details = projectDetailsData[lang][projectId];
+		const contentEl = document.querySelector('[data-project-id]');
+
+		if (details && contentEl) {
+			contentEl.innerHTML = `
+				<div class="section">
+					<h2>${details.overview.title}</h2>
+					<p>${details.overview.content}</p>
+				</div>
+
+				<div class="section">
+					<h2>${details.challenge.title}</h2>
+					<p>${details.challenge.content}</p>
+				</div>
+
+				<div class="section">
+					<h2>${details.solution.title}</h2>
+					<p>${details.solution.content}</p>
+				</div>
+
+				<div class="section">
+					<h2>${details.technical.title}</h2>
+					<ul>
+						${details.technical.items.map(item => `<li>${item}</li>`).join('')}
+					</ul>
+				</div>
+
+				<div class="section">
+					<h2>${details.learnings.title}</h2>
+					<ul>
+						${details.learnings.items.map(item => `<li>${item}</li>`).join('')}
+					</ul>
+				</div>
+
+				${details.images ? `
+					<div class="section">
+						<h2>${details.images.title}</h2>
+						<div class="images-grid">
+							${details.images.items.map(img => `
+								<div class="image-card">
+									<div class="image-placeholder">
+										<span>${img.placeholder}</span>
+									</div>
+									<p class="image-caption">${img.caption}</p>
+								</div>
+							`).join('')}
+						</div>
+					</div>
+				` : ''}
+			`;
+		}
+	}
+
+	// Initial update
+	updateContent();
+
+	// Update on language change
+	window.addEventListener('langchange', updateContent);
+</script>
+
+<style>
+	.project-detail {
+		min-height: 100vh;
+		padding: 5rem 1rem;
+		background: var(--background);
+		color: var(--foreground);
+	}
+
+	.container {
+		max-width: 56rem;
+		margin: 0 auto;
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--primary);
+		text-decoration: none;
+		font-family: var(--font-mono);
+		font-size: 0.875rem;
+		margin-bottom: 2rem;
+		transition: color 0.2s;
+	}
+
+	.back-link:hover {
+		color: var(--accent);
+	}
+
+	.project-header {
+		margin-bottom: 3rem;
+		text-align: center;
+	}
+
+	.icon {
+		font-size: 4rem;
+		margin-bottom: 1rem;
+	}
+
+	.project-header h1 {
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--primary);
+		margin-bottom: 1rem;
+		font-family: var(--font-mono);
+	}
+
+	.description {
+		font-size: 1.125rem;
+		color: var(--muted-foreground);
+		line-height: 1.75;
+		margin-bottom: 1.5rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		justify-content: center;
+	}
+
+	.tag {
+		padding: 0.25rem 0.75rem;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: 0.375rem;
+		font-size: 0.875rem;
+		font-family: var(--font-mono);
+		color: var(--accent);
+	}
+
+	.content {
+		font-family: var(--font-mono);
+	}
+
+	.section {
+		margin-bottom: 3rem;
+		padding: 2rem;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: 0.5rem;
+	}
+
+	.section h2 {
+		font-size: 1.75rem;
+		color: var(--primary);
+		margin-bottom: 1rem;
+		font-weight: 600;
+	}
+
+	.section p {
+		line-height: 1.75;
+		color: var(--foreground);
+		margin-bottom: 1rem;
+	}
+
+	.section ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.section ul li {
+		padding: 0.75rem 0;
+		padding-left: 1.5rem;
+		position: relative;
+		line-height: 1.75;
+		color: var(--foreground);
+	}
+
+	.section ul li::before {
+		content: "→";
+		position: absolute;
+		left: 0;
+		color: var(--primary);
+	}
+
+	.images-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1.5rem;
+		margin-top: 1.5rem;
+	}
+
+	.image-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.image-placeholder {
+		width: 100%;
+		aspect-ratio: 16/9;
+		background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+		border-radius: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 3rem;
+		border: 1px solid var(--border);
+	}
+
+	.image-caption {
+		font-size: 0.875rem;
+		color: var(--muted-foreground);
+		text-align: center;
+	}
+
+	@media (min-width: 640px) {
+		.project-header h1 {
+			font-size: 3rem;
+		}
+	}
+</style>

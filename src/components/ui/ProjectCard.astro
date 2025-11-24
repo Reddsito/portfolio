@@ -9,42 +9,52 @@ interface Props {
   icon: 'server' | 'lock' | 'database' | 'layers' | 'zap' | 'cloud';
   notionUrl?: string;
   tags: string[];
+  projectId?: string;
 }
 
-const { title, description, icon, notionUrl, tags } = Astro.props;
+const { title, description, icon, notionUrl, tags, projectId } = Astro.props;
 ---
 
-<Card variant="hover">
-  <article class="project-card">
-    <header class="card-header">
-      <div class="icon-container">
-        <Icon name={icon} size="md" />
+<a href={projectId ? `/projects/${projectId}` : '#'} class="project-link">
+  <Card variant="hover">
+    <article class="project-card">
+      <header class="card-header">
+        <div class="icon-container">
+          <Icon name={icon} size="md" />
+        </div>
+        {notionUrl && notionUrl !== '#' && (
+          <a
+            href={notionUrl}
+            class="external-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View project"
+            onclick="event.stopPropagation()"
+          >
+            <Icon name="external-link" size="sm" />
+          </a>
+        )}
+      </header>
+
+      <div class="card-content">
+        <h3>{title}</h3>
+        <p>{description}</p>
       </div>
-      {notionUrl && (
-        <a
-          href={notionUrl}
-          class="external-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View project"
-        >
-          <Icon name="external-link" size="sm" />
-        </a>
-      )}
-    </header>
 
-    <div class="card-content">
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </div>
-
-    <div class="tags">
-      {tags.map((tag) => <Tag>{tag}</Tag>)}
-    </div>
-  </article>
-</Card>
+      <div class="tags">
+        {tags.map((tag) => <Tag>{tag}</Tag>)}
+      </div>
+    </article>
+  </Card>
+</a>
 
 <style>
+  .project-link {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+  }
+
   .project-card {
     display: flex;
     flex-direction: column;

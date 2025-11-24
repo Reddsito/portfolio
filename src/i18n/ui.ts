@@ -41,6 +41,8 @@ export const ui = {
     'experience.contact.github': '→ GitHub',
     'experience.contact.linkedin': '→ LinkedIn',
 
+    'project.back': 'Volver a proyectos',
+
     'theme.light': 'Claro',
     'theme.dark': 'Oscuro',
     'theme.toggle': 'Cambiar tema',
@@ -80,6 +82,8 @@ export const ui = {
     'experience.contact.email': '→ Email',
     'experience.contact.github': '→ GitHub',
     'experience.contact.linkedin': '→ LinkedIn',
+
+    'project.back': 'Back to projects',
 
     'theme.light': 'Light',
     'theme.dark': 'Dark',
